@@ -6,49 +6,48 @@ A modular multi-agent system that converts raw call recordings and transcripts i
 
 ```mermaid
 flowchart TD
-    A([File Upload\nAudio · JSON · TXT]) --> B
+    A([File Upload<br/>Audio / JSON / TXT]) --> B
 
-    subgraph PIPELINE["LangGraph Pipeline — AgentState"]
+    subgraph PIPELINE["LangGraph Pipeline"]
         direction TB
 
-        B["Intake Agent\n───────────────────\nValidate file format\nExtract call metadata\nDetect PII / PHI / PCI\nDetect profanity"]
+        B["Intake Agent<br/>Validate format · Extract metadata<br/>Detect PII / PHI / PCI · Detect profanity"]
 
         B --> R1{routing_decision}
 
-        R1 -- audio --> C["Transcription Agent\n───────────────────\nUpload audio to S3\nStart Amazon Transcribe job\nPoll until COMPLETED\nDownload transcript · Clean up S3"]
+        R1 -- audio --> C["Transcription Agent<br/>Upload to S3 · Start Transcribe job<br/>Speaker diarization · Download · Cleanup"]
 
         C --> D
 
-        R1 -- summarize --> D["Summarization Agent\n───────────────────\nLangChain + Claude\nInject PII / profanity preamble\noverview · key_points\naction_items · sentiment\ncall_outcome · tags"]
+        R1 -- summarize --> D["Summarization Agent<br/>Claude · Structured output<br/>Overview · Key points · Action items<br/>Sentiment · Call outcome · Tags"]
 
         D --> R2{routing_decision}
 
-        R2 -- score --> E["QA Scoring Agent\n───────────────────\nClaude function calling\nsubmit_qa_score tool\nempathy · resolution\nprofessionalism · tone\nstrengths · improvements"]
+        R2 -- score --> E["QA Scoring Agent<br/>Claude function calling<br/>Empathy · Resolution<br/>Professionalism · Tone"]
 
-        R2 -- fallback --> F["Fallback Node\n───────────────────\nPreserves partial state\nRoutes onward to scoring"]
+        R2 -- fallback --> F["Fallback Node<br/>Preserve partial state<br/>Route to scoring"]
 
         F --> E
     end
 
-    E --> G[("SQLite\nCall History")]
+    E --> G[("SQLite<br/>Call History")]
+    E --> S
 
-    E --> UI
-
-    subgraph UI["Streamlit UI"]
+    subgraph STREAMLIT["Streamlit UI"]
         direction TB
 
-        UI["Read AgentState flags"]
+        S["Read AgentState"]
 
-        UI -- has_sensitive_data --> B1["Red Banner\nPII / PHI / PCI detected\nvalues masked with ####"]
-        UI -- has_profanity --> B2["Red Banner\nProfanity detected\nwords masked with ####"]
+        S -- has_sensitive_data --> B1["Red Banner<br/>PII / PHI / PCI detected<br/>Values masked with ####"]
+        S -- has_profanity --> B2["Red Banner<br/>Profanity detected<br/>Words masked with ####"]
 
-        UI --> T1["Transcript Tab\n───────────────────\nColor-coded dialogue\nAgent: black bold\nCustomer: blue\nSensitive values and\nprofanity masked with ####"]
+        S --> T1["Transcript Tab<br/>Color-coded dialogue<br/>Agent: black bold · Customer: blue<br/>Sensitive values masked"]
 
-        UI --> T2["Summary Tab\n───────────────────\nOverview\nKey points\nAction items\nSentiment · Call outcome"]
+        S --> T2["Summary Tab<br/>Overview · Key points<br/>Action items · Sentiment · Outcome"]
 
-        UI --> T3["QA Score Tab\n───────────────────\nEmpathy · Resolution\nProfessionalism · Tone\nOverall score · Feedback\nStrengths · Improvements"]
+        S --> T3["QA Score Tab<br/>Empathy · Resolution<br/>Professionalism · Tone<br/>Overall score · Feedback"]
 
-        UI --> T4["Tags and Highlights Tab\n───────────────────\nTopic tags\nCall metadata table"]
+        S --> T4["Tags and Highlights Tab<br/>Topic tags · Call metadata table"]
     end
 ```
 
