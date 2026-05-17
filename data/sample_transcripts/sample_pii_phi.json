@@ -1,0 +1,8 @@
+{
+  "call_id": "CALL-013",
+  "agent_name": "Karen Mills",
+  "customer_name": "Robert Haines",
+  "duration_seconds": 540,
+  "call_date": "2025-05-14",
+  "transcript": "Agent: Thank you for calling MedAssist Support. This is Karen. How can I help you today?\n\nCustomer: Hi Karen. I need to update my health insurance information and also check on a claim.\n\nAgent: Of course. Let me pull up your account. Can I verify your date of birth please?\n\nCustomer: Sure, my date of birth is 07/14/1978.\n\nAgent: Thank you. And your Social Security Number for verification?\n\nCustomer: It is 523-74-1892.\n\nAgent: Perfect. I have your account here. I can see the claim filed on April 10th. Your insurance member ID is MED-HI-2291847 and your medical record number is MRN-00445521. The claim is for the prescription you were diagnosed with for hypertension — the medication dosage was flagged for review.\n\nCustomer: Yes, I was prescribed Lisinopril 10mg. Can you see the status?\n\nAgent: I can see it is under clinical review. The reviewing physician has your full medical history on file. Can I also update your contact details? What is your current email?\n\nCustomer: It is robert.haines@personalmail.com. And my phone is 415-882-3301.\n\nAgent: Got it. And do you want to update the card on file for your co-pay? We currently have a Visa ending in 4532.\n\nCustomer: Yes please. The new card is 4111 1111 1111 1234, expiry 09/27, CVV 342.\n\nAgent: Thank you. I have updated that. Is there anything else I can help with?\n\nCustomer: No, that covers it. Thank you Karen.\n\nAgent: You are welcome. Take care, Robert."
+}

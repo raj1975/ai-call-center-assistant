@@ -1,0 +1,50 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Environment variables
+.env
+
+# Streamlit
+.streamlit/secrets.toml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Logs
+*.log
+
+# Memory / call history DB (runtime data)
+data/memory/
+
+# Uploaded/temp audio files
+data/uploads/
+*.mp3
+*.wav
+*.m4a
+*.ogg
+*.flac
+
+
+# AI tools
+.claude/
+CLAUDE.md

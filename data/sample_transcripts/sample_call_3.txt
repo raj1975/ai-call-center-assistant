@@ -1,0 +1,25 @@
+Agent: Thank you for calling RetailMax customer service. My name is Jake. How can I help you?
+
+Customer: Hi Jake. I ordered a pair of headphones two weeks ago and they still have not arrived. The tracking says delivered but I never received them.
+
+Agent: I am sorry to hear that, this is very frustrating. Let me look into your order right away. Can I get your order number or the email address on your account?
+
+Customer: Sure, it is lisa.chen@myemail.com. Order number 78934.
+
+Agent: Thank you Lisa. I can see your order here. It shows delivered to 45 Maple Street on May 3rd at 2:14 PM with a signature confirmation. Were you home at that time?
+
+Customer: No, I was at work. I never authorized anyone to sign for it. And none of my neighbors have it either. I already checked.
+
+Agent: I completely understand. This sounds like it may have been misdelivered or the signature was obtained incorrectly. I am filing a lost package claim with our shipping carrier right now. We have two options for you: I can send a replacement immediately with overnight shipping at no charge, or issue a full refund. Which would you prefer?
+
+Customer: I really do want the headphones, so a replacement please.
+
+Agent: Done. I have placed a replacement order with overnight shipping. You will receive a tracking number within the hour. The estimated delivery is tomorrow by 8 PM. I have also flagged this shipment for signature-required delivery at your door only.
+
+Customer: That is great. Can I also get the claim number in case I need to follow up?
+
+Agent: Of course. Your claim number is CL-2025-98234. You will also receive all of this in a confirmation email in the next few minutes. Is there anything else I can help you with today?
+
+Customer: No, that is everything. Thank you Jake, you turned a really stressful situation around quickly.
+
+Agent: I am so glad we could sort this out for you, Lisa. I hope you enjoy your headphones when they arrive. Take care!

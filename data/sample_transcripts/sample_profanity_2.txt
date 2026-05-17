@@ -1,0 +1,25 @@
+Agent: Thank you for calling BrightBill customer support. This is Marcus speaking. How can I help you today?
+
+Customer: Marcus, I am going to be very direct with you. I have been charged three times for the same subscription this month and this is absolute bullshit.
+
+Agent: I completely understand your frustration. A triple charge is a serious error and I am sorry that happened. Let me pull up your account right away. Can I get your email address?
+
+Customer: It is jessica.ford@email.com. And I want to be clear, if this is not fixed today I am going to dispute every single charge with my bank and cancel this service. I am so pissed off.
+
+Agent: I hear you, Jessica. I can see your account and you are right — there are three identical charges of $29.99 on May 1st. That was a billing system error on our end. I am issuing a full refund for two of those charges right now.
+
+Customer: About damn time. How long will the refund take?
+
+Agent: The refunds will appear within 3 to 5 business days. I am also adding a $15 account credit for the inconvenience.
+
+Customer: Three to five days? You charged me instantly but it takes five days to give me my own money back? That is such crap.
+
+Agent: I completely understand that feels unfair, and you are right. Unfortunately the refund timeline is set by the payment networks, not us. I cannot speed that up but I want to assure you both refunds are already processing as of this moment.
+
+Customer: Fine. I guess that is all you can do. I am still angry but I appreciate you actually fixing it.
+
+Agent: That is totally fair. You were wrongly charged and you have every right to be upset. Is there anything else I can help you with today?
+
+Customer: No. Just make sure this does not happen again.
+
+Agent: Absolutely. I have flagged your account for billing review so this will not recur. Thank you for your patience, Jessica.

@@ -1,0 +1,23 @@
+Agent: Welcome to FastShip support. My name is Priya. How can I assist you today?
+
+Customer: Yeah hi Priya. I need to know where the hell my package is. I ordered it eight days ago and it still says "in transit." That is ridiculous.
+
+Agent: I am really sorry to hear that. Eight days is far too long and I completely understand your frustration. Can I get your order number?
+
+Customer: It is FS-990214. I paid extra for three-day shipping. Three days! And it has been eight. What a joke.
+
+Agent: I can see your order. It looks like the package was delayed at a regional sorting facility due to a weather event on May 8th. That is not an excuse, just context. The package is now moving again and is estimated to arrive tomorrow.
+
+Customer: Tomorrow? I needed it for an event on Monday. That event is over. The whole point of the order is gone. This is such garbage.
+
+Agent: I am truly sorry. That is a real impact and I do not want to minimize it. Because of the delay and the missed use case, I am refunding your express shipping fee in full and also issuing a 20% discount on your next order.
+
+Customer: Honestly I don't even care about the discount at this point, I just want to know someone actually gives a damn about their customers.
+
+Agent: I hear that completely. I do care and I am sorry we let you down on this one. The shipping refund will hit your card within 48 hours. Would you still like the package delivered or would you prefer we redirect it?
+
+Customer: Just deliver it. Maybe I can use it for something else.
+
+Agent: Understood. It is on its way and should be there by end of day tomorrow. I am sorry again, and I hope we can do better for you next time.
+
+Customer: Alright. Thanks for being straight with me at least.

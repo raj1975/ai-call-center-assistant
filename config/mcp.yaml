@@ -1,0 +1,31 @@
+models:
+  local:
+    name: claude-sonnet-4-5
+    provider: anthropic
+    max_tokens: 2048
+  bedrock:
+    # Cross-region inference profile — verify ID in AWS Console → Bedrock → Model access
+    name: us.anthropic.claude-sonnet-4-5-20250514-v1:0
+    provider: bedrock
+    aws_region: us-east-1
+    max_tokens: 2048
+  transcription:
+    name: amazon-transcribe
+    provider: aws
+    language: en-US
+    timeout_seconds: 300
+
+routing:
+  max_retries: 2
+  fallback_enabled: true
+  timeout_seconds: 60
+
+thresholds:
+  min_transcript_length: 50
+  max_audio_duration_minutes: 30
+  max_file_size_mb: 25
+
+cost_controls:
+  cache_system_prompts: true
+  max_tokens_per_call: 4000
+  log_usage: true

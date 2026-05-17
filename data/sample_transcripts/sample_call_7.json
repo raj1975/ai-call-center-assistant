@@ -1,0 +1,8 @@
+{
+  "call_id": "CALL-007",
+  "agent_name": "Chloe Barnes",
+  "customer_name": "Daniel Reyes",
+  "duration_seconds": 390,
+  "call_date": "2025-05-12",
+  "transcript": "Agent: ShopEasy customer service, Chloe speaking. How can I help you?\n\nCustomer: Hi. I received a blender I ordered last week and the motor is dead on arrival. It does not turn on at all.\n\nAgent: Oh no, I am sorry to hear that, Daniel. That is definitely not the experience we want you to have. Let me pull up your order. Can I get your order number?\n\nCustomer: It is SE-779023.\n\nAgent: Got it. I can see the order — the ProBlend 500. Can I ask, did you try a different power outlet just to rule that out?\n\nCustomer: Yes, I tried two different outlets. Nothing.\n\nAgent: Thank you for checking. This sounds like a faulty unit. I have two options for you: I can ship a replacement blender with overnight delivery at no charge, or I can process a full refund to your original payment method. Which would you prefer?\n\nCustomer: I would like the replacement. I bought it as a gift and the birthday is this weekend.\n\nAgent: Perfect. I have already placed the replacement order with overnight shipping — it will arrive tomorrow by 8 PM. You will receive a tracking email within the hour. For the defective unit, a prepaid return label will also be in that email. You have 30 days to send it back at no cost to you.\n\nCustomer: That is really quick, thank you.\n\nAgent: Of course. I am also adding a $10 store credit to your account for the inconvenience. Is there anything else I can help you with?\n\nCustomer: No, that covers everything. Very happy with how this was handled.\n\nAgent: I am glad we could sort it out quickly. Have a wonderful birthday celebration this weekend!"
+}

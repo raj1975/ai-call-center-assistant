@@ -1,0 +1,31 @@
+Agent: BrightTech Support, this is James. How can I help you today?
+
+Customer: Hi James. I am calling to follow up on a ticket from last week. Ticket number BT-55234. A technician was supposed to call me back by Friday but I never heard anything.
+
+Agent: I apologize for that, and thank you for following up. Let me pull up that ticket right now. Can I get your name and account email?
+
+Customer: Sure, it is Robert Simmons, robert.simmons@email.com.
+
+Agent: Thank you, Robert. I have your ticket here. This was regarding the intermittent connection drops on your business account. I can see the ticket was escalated to our Tier 2 team on May 7th with a callback promised by May 9th. I do not see any callback logged. That is our error and I sincerely apologize.
+
+Customer: This is a business account. Every drop costs us money. I need this fixed, not just promised.
+
+Agent: Absolutely, and you are right to be frustrated. I am not going to make another promise without action. I am going to conference in our Tier 2 engineer right now while I have you on the line so we can move forward immediately rather than scheduling another callback.
+
+Customer: That would be great, actually.
+
+Agent: Please hold for two minutes... Robert, I have Kyle from our Tier 2 network team on the line.
+
+Tier 2 Engineer: Hi Robert, this is Kyle. I reviewed your ticket — I can see the line diagnostics from last week show packet loss at peak hours. This points to a congestion issue on the local loop. I would like to schedule a line audit for tomorrow morning between 8 and 10 AM. Can we do that?
+
+Customer: Yes, that works. Will this actually fix it?
+
+Tier 2 Engineer: Based on the data I am seeing, a line reconfiguration should resolve it. If it does not, we will escalate to a physical infrastructure check the same day.
+
+Customer: Okay. I appreciate you both actually taking this seriously.
+
+Agent: Robert, I have logged this with Kyle's direct extension as your point of contact. You will also receive a confirmation email with tomorrow's appointment details. Is there anything else I can help with?
+
+Customer: No, this is what I needed. Thank you for getting Kyle on the call.
+
+Agent: Absolutely. We will see you resolved tomorrow.

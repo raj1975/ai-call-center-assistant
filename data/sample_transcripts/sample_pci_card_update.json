@@ -1,0 +1,8 @@
+{
+  "call_id": "CALL-023",
+  "agent_name": "Leo Marchetti",
+  "customer_name": "Diane Holloway",
+  "duration_seconds": 310,
+  "call_date": "2026-05-15",
+  "transcript": "Agent: Thank you for calling PremiumCard services. This is Leo. How can I assist you today?\n\nCustomer: Hi Leo. I need to add a new card to my account and remove the old one. Also I want to update my billing address.\n\nAgent: Of course. Can I verify your identity? What is the Social Security Number on file?\n\nCustomer: It is 309-55-7821.\n\nAgent: Thank you Diane. What is the new card you would like to add?\n\nCustomer: It is a Visa. Number is 4716 2291 8834 5509, expiry 11/28, CVV 274.\n\nAgent: Got that. 4716 2291 8834 5509, expiring 11/28, security code 274. And which card would you like removed?\n\nCustomer: The Mastercard ending in 3372. Number is 5412 7533 9901 3372, expiry 03/25. That one expired anyway.\n\nAgent: Removing that now. And the new billing address?\n\nCustomer: 1204 Ridgecrest Lane, Austin, Texas 78701. Phone on the account should be 512-334-9087 and email diane.holloway@personal.net.\n\nAgent: Updated. Billing address is 1204 Ridgecrest Lane Austin TX 78701, phone 512-334-9087, email diane.holloway@personal.net. Is there anything else?\n\nCustomer: Yes, I also want to set the new Visa as the default payment for auto-pay.\n\nAgent: Done. The Visa ending in 5509 is now your default auto-pay card. Is there anything else I can help with today?\n\nCustomer: No that is all. Thanks Leo.\n\nAgent: You are welcome Diane. Have a wonderful day."
+}

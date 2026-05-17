@@ -1,0 +1,25 @@
+Agent: Thank you for calling TechHelp. This is James speaking. How can I help you today?
+
+Customer: Finally! I have been on hold for 45 minutes. This is absolutely ridiculous. Your service is complete bullshit and I am furious.
+
+Agent: I completely understand your frustration and I sincerely apologize for the wait time. That is not acceptable and I want to make this right. Can you tell me what issue you are experiencing?
+
+Customer: My internet has been down for three days. Three damn days! I work from home and I have lost two client contracts because of this crap. I want answers now.
+
+Agent: I am very sorry to hear that. Three days without service when you work from home is a serious problem and I take full responsibility for getting this resolved today. Let me pull up your account. Can I get your account number?
+
+Customer: It is 887234. And I am telling you right now, if this is not fixed today I am cancelling everything. I have had it.
+
+Agent: I understand completely. I can see your account and I can see the outage ticket. There was a fibre cut in your area that our engineers have been working on. I am escalating your case to our priority repair team right now. They will be on site within two hours.
+
+Customer: Two hours? That is still more waiting. This is so frustrating. You people have no idea what this costs me.
+
+Agent: You are absolutely right and I am not going to make excuses. I am also applying a full credit for the three days of outage to your account and adding a goodwill credit of $50 for the inconvenience caused to your business. Is there a direct number our engineer can call when they are on their way?
+
+Customer: Fine. Yes. 503-441-7892. And I am sorry for losing my temper. I am just really stressed.
+
+Agent: Please do not apologise at all. Your frustration is completely valid. I would feel the same way. The engineer will call you before arrival. I am staying on your case until this is resolved. You have my word.
+
+Customer: Thank you. I appreciate that.
+
+Agent: Thank you for your patience. We will get this fixed for you today.

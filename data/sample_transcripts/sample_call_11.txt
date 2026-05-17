@@ -1,0 +1,29 @@
+Agent: QuickShip support, this is Amara speaking. How can I help you today?
+
+Customer: Hi. My package was supposed to arrive three days ago and the tracking has not updated since it left the warehouse. I am getting really worried.
+
+Agent: I am sorry to hear that. Let me look into this right away. Can I have your tracking number?
+
+Customer: It is QS-2025-991047.
+
+Agent: Thank you. Let me check... I can see your package departed our Chicago facility on May 8th and was scanned at our Indianapolis hub on May 9th. After that there are no further scans. That is unusual.
+
+Customer: So where is it?
+
+Agent: It appears the package may be delayed or misrouted somewhere between Indianapolis and your destination. I am opening a trace request right now. Our logistics team will physically locate the package within 48 hours.
+
+Customer: 48 hours? I needed this for a work project that starts Monday.
+
+Agent: I completely understand the urgency. I am marking this as time-sensitive in the trace request. I am also going to send you a direct contact for our trace team so you can follow up if you need to. Additionally, if the package is not located within 48 hours, you will be eligible for a full refund plus reshipping at no cost.
+
+Customer: Okay. What is the trace team contact?
+
+Agent: I will send it to the email on your account within the next 30 minutes along with your trace case number. Your case number is TRC-88201.
+
+Customer: Alright. I hope it turns up. This is my first time using QuickShip and it has not been a great experience.
+
+Agent: I completely understand and I am sorry your first experience has been stressful. We will do everything we can to locate your package and make this right. I will personally note your feedback so our management team is aware.
+
+Customer: Thank you, Amara.
+
+Agent: Thank you for your patience. You will hear from us within 48 hours.
