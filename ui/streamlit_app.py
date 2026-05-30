@@ -164,7 +164,7 @@ st.caption("Upload a call recording or transcript to generate AI-powered summari
 
 uploaded_file = st.file_uploader(
     "Upload Call Recording or Transcript",
-    type=["mp3", "wav", "m4a", "ogg", "json", "txt"],
+    type=["mp3", "wav", "m4a", "ogg", "json", "txt", "pdf"],
     help="Audio files are transcribed via Amazon Transcribe. JSON/TXT transcripts are processed directly.",
 )
 
