@@ -20,6 +20,9 @@ env/
 # Streamlit
 .streamlit/secrets.toml
 
+# bedrock deploy script
+deploy.sh
+
 # OS
 .DS_Store
 Thumbs.db

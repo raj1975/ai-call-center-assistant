@@ -61,9 +61,71 @@ Conditional edges in the LangGraph pipeline handle routing after each node. A tr
 - **QA scoring** — empathy, resolution, professionalism, tone scored 0–10 with feedback
 - **Sensitive data detection** — PCI (card numbers, CVV), PII (SSN, email, phone), PHI (MRN, DOB, medical info) detected at intake and after audio transcription; masked in the transcript view with partial masking where applicable (SSN shows last 4 digits as `###-##-1234`; DOB shows year only as `##/##/YYYY` or `[DOB: YYYY]`; all other values replaced with `####`); suppressed entirely from the summary; red warning banner shown in UI
 - **Profanity detection** — offensive language detected, masked with `####` in the transcript view, and suppressed from the summary; sentiment still reflected accurately; red warning banner shown in UI
+- **Fallback handling** — unsupported file formats are rejected immediately with a clear error message; corrupt or failed audio jobs route through the fallback node preserving partial state so QA scoring still runs
 - **Call history** — all analyzed calls persisted in SQLite and shown in the sidebar with sentiment indicator and score
 - **Dual LLM mode** — `USE_BEDROCK=false` uses Anthropic API directly (local dev); `USE_BEDROCK=true` uses Claude on Amazon Bedrock (AWS deployment)
-- **Audio transcription** — Amazon Transcribe via S3 upload (no OpenAI dependency)
+- **Audio transcription** — Amazon Transcribe via S3 upload with speaker diarization (Agent / Customer turn separation); Claude fallback when no speaker labels returned
+- **Number normalisation** — comma thousand-separators inserted by Amazon Transcribe (e.g. `4,421`) are stripped before display
+
+---
+
+## How to Test
+
+The live deployment is accessible at:
+
+```
+https://ai-0329bd35529f43688cd951898193401d.ecs.us-east-1.on.aws
+```
+
+To test locally, clone the repo and use the sample files included in `data/sample_transcripts/`:
+
+```bash
+git clone https://github.com/raj1975/ai-call-center-assistant.git
+cd ai-call-center-assistant
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+cp .env.example .env   # fill in ANTHROPIC_API_KEY
+streamlit run ui/streamlit_app.py
+```
+
+### Recommended test scenarios
+
+| Scenario | File to upload | What to verify |
+|---|---|---|
+| Clean transcript | `data/sample_transcripts/sample_call_1.json` | Summary, QA score, 4 tabs render correctly |
+| PII detection | `data/sample_transcripts/sample_pii_banking.json` | Red PII banner, masked SSN/card/phone in transcript, no PII in summary |
+| PHI detection | `data/sample_transcripts/sample_phi_medical.json` | Red PII banner, DOB shows year only, MRN masked |
+| Profanity detection | `data/sample_transcripts/sample_profanity_pii_mixed.json` | Red profanity banner, masked words in transcript, clean summary |
+| PCI detection | `data/sample_transcripts/sample_pci_card_update.json` | Card number, CVV, expiry all masked |
+| Unsupported format (error path) | `data/sample_transcripts/unsupported_format.pdf` | Red error message, pipeline stops cleanly |
+| Corrupt audio (fallback path) | `data/sample_transcripts/corrupt_audio.wav` | Yellow warning, fallback node fires, QA scoring still runs |
+| Audio transcription | `data/sample_transcripts/sample_audio_call.mp3` | Requires AWS credentials — speaker-diarized transcript, full pipeline |
+
+> Audio files require `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_REGION`, and `S3_BUCKET` set in `.env`.  
+> All other file types (JSON, TXT) work with just `ANTHROPIC_API_KEY`.
+
+---
+
+## Unit Tests
+
+169 tests across all modules. Run with:
+
+```bash
+pytest
+```
+
+| Test file | Coverage |
+|---|---|
+| `test_intake_agent.py` | Routing, metadata extraction, PII/profanity detection |
+| `test_transcription_agent.py` | AWS mocks, speaker diarization, number normalisation, failure paths |
+| `test_summarization_agent.py` | Routing, fallback on short/empty transcript, PII/profanity preamble injection |
+| `test_quality_score_agent.py` | String-to-list coercion for strengths/improvements |
+| `test_routing_agent.py` | All routing decision functions, fallback and error nodes |
+| `test_sensitive_data.py` | Detection, masking, partial masking (SSN last-4, DOB year-only), context-aware masking |
+| `test_validation.py` | Pydantic models |
+| `test_memory.py` | SQLite persistence |
+| `test_llm_factory.py` | Bedrock / Anthropic toggle |
 
 ---
 
@@ -80,8 +142,8 @@ Conditional edges in the LangGraph pipeline handle routing after each node. A tr
 **1. Clone the repo**
 
 ```bash
-git clone <repo-url>
-cd ai-call-center-summarization
+git clone https://github.com/raj1975/ai-call-center-assistant.git
+cd ai-call-center-assistant
 ```
 
 **2. Create and activate a virtual environment**
@@ -129,18 +191,49 @@ Open [http://localhost:8501](http://localhost:8501) in your browser.
 
 ---
 
-## Deploy to AWS — EC2 with Docker
+## Deploy to AWS — ECS Express (Bedrock)
+
+The app is deployed on AWS ECS Express Service with Claude on Amazon Bedrock. The Docker image is hosted in ECR and deployed to the `default` ECS cluster using a canary deployment strategy with automatic rollback.
 
 ### Prerequisites
 
-- An EC2 instance (recommended: `t3.medium` or larger, Amazon Linux 2023 or Ubuntu 22.04)
-- Docker installed on the instance
-- An IAM role attached to the EC2 instance with Bedrock, S3, and Transcribe permissions (see below)
-- Port 8501 open in the instance's security group
+- AWS CLI configured (`aws configure`)
+- Docker installed
+- ECR repository, IAM task role, and ECS cluster already provisioned
 
-### Step 1 — Launch EC2 and attach an IAM role
+### Build and push to ECR
 
-Create an IAM role with the following inline policy and attach it to your EC2 instance:
+```bash
+aws ecr get-login-password --region us-east-1 | \
+  docker login --username AWS --password-stdin 280793169196.dkr.ecr.us-east-1.amazonaws.com
+
+docker build --platform linux/amd64 -t ai-call-center-assistant .
+docker tag ai-call-center-assistant:latest \
+  280793169196.dkr.ecr.us-east-1.amazonaws.com/ai-call-center-assistant:latest
+docker push \
+  280793169196.dkr.ecr.us-east-1.amazonaws.com/ai-call-center-assistant:latest
+```
+
+### Update the ECS service
+
+```bash
+aws ecs update-service \
+  --cluster default \
+  --service ai-call-center-assistant \
+  --force-new-deployment \
+  --region us-east-1
+```
+
+### Required environment variables in ECS task definition
+
+| Variable | Value |
+|---|---|
+| `USE_BEDROCK` | `true` |
+| `AWS_REGION` | `us-east-1` |
+| `BEDROCK_PRIMARY_MODEL` | `us.anthropic.claude-sonnet-4-5-20250514-v1:0` |
+| `S3_BUCKET` | `ai-call-center-summarization-us-east-1` |
+
+### IAM role permissions required
 
 ```json
 {
@@ -154,7 +247,7 @@ Create an IAM role with the following inline policy and attach it to your EC2 in
     {
       "Effect": "Allow",
       "Action": ["s3:PutObject", "s3:GetObject", "s3:DeleteObject"],
-      "Resource": "arn:aws:s3:::your-s3-bucket-name/call-audio/*"
+      "Resource": "arn:aws:s3:::ai-call-center-summarization-us-east-1/call-audio/*"
     },
     {
       "Effect": "Allow",
@@ -163,90 +256,6 @@ Create an IAM role with the following inline policy and attach it to your EC2 in
     }
   ]
 }
-```
-
-> With an instance role attached, `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` are not needed — the AWS SDK picks up credentials automatically from the instance metadata service.
-
-### Step 2 — Install Docker on the EC2 instance
-
-```bash
-# Amazon Linux 2023
-sudo dnf update -y
-sudo dnf install -y docker
-sudo systemctl start docker
-sudo systemctl enable docker
-sudo usermod -aG docker ec2-user   # allow running docker without sudo
-
-# Ubuntu 22.04
-sudo apt-get update
-sudo apt-get install -y docker.io docker-compose-plugin
-sudo systemctl start docker
-sudo usermod -aG docker ubuntu
-```
-
-Log out and back in for the group change to take effect.
-
-### Step 3 — Copy the project to EC2
-
-```bash
-# From your local machine
-scp -r ./ ec2-user@<ec2-public-ip>:~/ai-call-center-summarization
-ssh ec2-user@<ec2-public-ip>
-cd ai-call-center-summarization
-```
-
-Or clone directly on the instance if the repo is on GitHub:
-
-```bash
-git clone <repo-url>
-cd ai-call-center-summarization
-```
-
-### Step 4 — Create the .env file on EC2
-
-```bash
-cp .env.example .env
-nano .env
-```
-
-Set at minimum:
-
-```
-USE_BEDROCK=true
-AWS_REGION=us-east-1
-BEDROCK_PRIMARY_MODEL=us.anthropic.claude-sonnet-4-5-20250514-v1:0
-S3_BUCKET=your-s3-bucket-name
-```
-
-Leave `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` blank — the instance role handles auth.
-
-### Step 5 — Build and run with Docker
-
-```bash
-docker compose up --build -d
-```
-
-The app will be available at:
-
-```
-http://<ec2-public-ip>:8501
-```
-
-### Step 6 — Open port 8501 in the security group
-
-In the AWS Console go to **EC2 → Security Groups → Inbound rules** and add:
-
-| Type | Protocol | Port | Source |
-|------|----------|------|--------|
-| Custom TCP | TCP | 8501 | 0.0.0.0/0 (or your IP) |
-
-### Useful commands
-
-```bash
-docker compose logs -f          # stream logs
-docker compose down             # stop the container
-docker compose up --build -d    # rebuild and restart after code changes
-docker ps                       # check container status
 ```
 
 ---
@@ -265,7 +274,7 @@ Override via the `BEDROCK_PRIMARY_MODEL` environment variable.
 ```
 ├── agents/
 │   ├── intake_agent.py          input validation, metadata extraction, PII/profanity detection
-│   ├── transcription_agent.py   Amazon Transcribe STT for audio files
+│   ├── transcription_agent.py   Amazon Transcribe STT, speaker diarization, number normalisation
 │   ├── summarization_agent.py   LangChain + Pydantic: structured summary with PII/profanity suppression
 │   ├── quality_score_agent.py   Claude function calling: QA rubric scoring
 │   └── routing_agent.py         conditional routing functions and fallback/error nodes
@@ -280,8 +289,19 @@ Override via the `BEDROCK_PRIMARY_MODEL` environment variable.
 │   ├── sensitive_data.py        regex-based PCI/PHI/PII detection + profanity word-list
 │   ├── validation.py            Pydantic models: CallMetadata, CallSummary, QAScore
 │   └── observability.py         log_agent decorator: timing, entry/exit, error logging
+├── tests/
+│   ├── test_intake_agent.py
+│   ├── test_transcription_agent.py
+│   ├── test_summarization_agent.py
+│   ├── test_quality_score_agent.py
+│   ├── test_routing_agent.py
+│   ├── test_sensitive_data.py
+│   ├── test_validation.py
+│   ├── test_memory.py
+│   └── test_llm_factory.py
 ├── data/
-│   └── sample_transcripts/      20 sample calls including PII/PHI/PCI, profanity, and mixed test files
+│   └── sample_transcripts/      22 sample files — clean calls, PII/PHI/PCI, profanity, audio,
+│                                 unsupported format (PDF), and corrupt audio for fallback testing
 ├── .streamlit/
 │   └── config.toml              theme, upload size, toolbar/top-bar settings
 ├── config/
@@ -301,6 +321,8 @@ Override via the `BEDROCK_PRIMARY_MODEL` environment variable.
 | `.mp3`, `.wav`, `.m4a`, `.ogg` | Audio — transcribed via Amazon Transcribe |
 | `.json` | Transcript with metadata: `agent_name`, `customer_name`, `duration_seconds`, `transcript` |
 | `.txt` | Plain text transcript |
+
+Unsupported formats (e.g. `.pdf`, `.docx`) are rejected at intake with a clear error message.
 
 ---
 
